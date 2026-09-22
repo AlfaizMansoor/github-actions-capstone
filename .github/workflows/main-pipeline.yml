@@ -1,0 +1,23 @@
+name: main brabch pipeline
+
+on:
+    push:
+        branches: [main]
+
+jobs: 
+    build-test:
+        uses: ./.github/workflows/reusable-build-test.yml
+
+    docker-build:
+        needs: [build-test]
+        uses: ./.github/workflows/reusable-docker.yml
+        with:
+            image_name: 'github-actions-capstone'
+            tag: "latest,sha-${{github.sha}}"
+
+    deploy:
+        needs: [docker-build]
+        runs-on: ubuntu-latest
+        steps:
+            - name: deploying image
+              run: echo "Deploying image:${{ needs.docker-build.outputs.image_url }} to production"

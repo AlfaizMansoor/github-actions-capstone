@@ -1,0 +1,32 @@
+name: health check
+
+on: 
+    schedule:
+        - cron: 0 */12 * * *
+
+jobs: 
+    pull-image:
+        runs-on: ubuntu-latest
+        steps:
+            - name: docker pull
+              run: docker pull devuqaab/github-actions-capstone:latest
+        
+            - name: docker run
+              run: |
+                docker run -d --name bank-app devuqaab/github-actions-capstone:latest
+                sleep 5 
+                if curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/health | grep -q "200"; then
+                  echo "Container Health Check Passed!"
+                  docker stop $CONTAINER && docker rm $CONTAINER
+                else
+                  echo "Container Health Check Failed!"
+                  docker stop $CONTAINER && docker rm $CONTAINER
+                  exit 1
+                fi
+
+            - name: summary
+              run: |
+                echo "## Health Check Report" >> $GITHUB_STEP_SUMMARY
+                echo "- Image: myapp:latest" >> $GITHUB_STEP_SUMMARY
+                echo "- Status: PASSED" >> $GITHUB_STEP_SUMMARY
+                echo "- Time: $(date)" >> $GITHUB_STEP_SUMMARY
