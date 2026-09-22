@@ -1,0 +1,38 @@
+# Version control
+.git
+.gitignore
+.hg
+.svn
+
+# Local environment secrets
+.env
+.env.*
+*.local
+*.pem
+*.key
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDEs and Text Editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Logs and diagnostics
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Docker files (Prevents rewriting build context if changed)
+Dockerfile
+docker-compose*.yml
+.dockerignore
+

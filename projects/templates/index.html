@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Accounts</h2>
+<form method="POST" action="/create" class="mb-3">
+  <input type="text" name="account_id" placeholder="New Account ID" required>
+  <button class="btn btn-success">Create Account</button>
+</form>
+<table class="table table-striped">
+  <tr><th>ID</th><th>Balance</th><th>Actions</th></tr>
+  {% for acc in accounts %}
+  <tr>
+    <td>{{ acc.account_id }}</td>
+    <td>{{ acc.balance }}</td>
+    <td>
+      <form method="POST" action="/deposit/{{ acc.account_id }}" style="display:inline;">
+        <input type="number" name="amount" placeholder="Amount" required>
+        <button class="btn btn-primary btn-sm">Deposit</button>
+      </form>
+      <form method="POST" action="/withdraw/{{ acc.account_id }}" style="display:inline;">
+        <input type="number" name="amount" placeholder="Amount" required>
+        <button class="btn btn-warning btn-sm">Withdraw</button>
+      </form>
+      <a href="/history/{{ acc.account_id }}" class="btn btn-info btn-sm">History</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+<h3>Transfer</h3>
+<form method="POST" action="/transfer">
+  <input type="text" name="from_id" placeholder="From Account" required>
+  <input type="text" name="to_id" placeholder="To Account" required>
+  <input type="number" name="amount" placeholder="Amount" required>
+  <button class="btn btn-dark">Transfer</button>
+</form>
+{% endblock %}
+

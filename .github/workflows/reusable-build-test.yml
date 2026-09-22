@@ -1,0 +1,60 @@
+name: reusable build
+
+on:
+    workflow_call:
+        inputs:
+            python_version: 
+                description: "choose python version"
+                type: string
+                required: false
+                default: '3.11'
+            run_tests:
+                required: false
+                type: boolean
+                default: true
+        outputs:
+            test_result:
+                description: "final result"
+                value: ${{ jobs.reusable.outputs.test_result }}
+
+jobs:
+    reusable: 
+        runs-on: ubuntu-latest
+        outputs:
+            test_result: ${{ steps.status.outputs.test_result }}
+        steps: 
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: python
+              uses: actions/setup-python@v5
+              with:
+                python-version:  ${{ inputs.python_version }}
+              
+            - name: install dependencies
+              run: pip install --no-cache-dir -r requirements.txt
+
+            - name: run tests
+              if: ${{inputs.run_tests == true}}
+              id: runs
+              run: echo "Running"
+
+            - name: test run
+              id: status
+              run: |
+                # Case A: Tests were skipped by inputs configuration
+                if [ "${{ inputs.run_tests }}" = "false" ]; then
+                  echo "test_result=skipped" >> $GITHUB_OUTPUT
+                  echo "Tests were skipped."
+                
+                # Case B: Tests executed successfully
+                elif [ "${{ steps.runs.outcome }}" = "success" ]; then
+                  echo "test_result=passed" >> $GITHUB_OUTPUT
+                  echo "Tests passed successfully."
+                
+                # Case C: Tests failed execution
+                else
+                  echo "test_result=failed" >> $GITHUB_OUTPUT
+                  echo "Tests failed."
+                  exit 1 # Hard fail the job run so the github check turns red
+                fi

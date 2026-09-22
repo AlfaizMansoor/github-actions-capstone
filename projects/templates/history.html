@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Transaction History for {{ account.account_id }}</h2>
+<table class="table table-bordered">
+  <tr><th>Type</th><th>Amount</th><th>Timestamp</th></tr>
+  {% for tx in transactions %}
+  <tr>
+    <td>{{ tx.type }}</td>
+    <td>{{ tx.amount }}</td>
+    <td>{{ tx.timestamp }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<a href="/" class="btn btn-secondary">Back</a>
+{% endblock %}
+

@@ -1,0 +1,44 @@
+# This is test docker-compose file for task day-36
+services:
+  app:
+    build: .
+    container_name: bankapp
+    ports:
+      - "5000:5000"
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - mynet
+    volumes:
+      - .:/app
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8.0
+    container_name: bank-mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    env_file:
+      - .env
+    command: --default-authentication-plugin=caching_sha2_password
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpass"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - mynet 
+    volumes: 
+      - bank-app-volume:/var/lib/mysql 
+
+volumes:
+  bank-app-volume:
+    
+networks:
+  mynet:
+    driver: bridge
