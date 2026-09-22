@@ -38,7 +38,8 @@ jobs:
               with:
                 context: .
                 push: true
-                tag: ${{secrets.DOCKER_USERNAME}}/github-actions-capstone:latest
+                tag: 
+                  ${{secrets.DOCKER_USERNAME}}/github-actions-capstone:latest
 
             - name: image set
               id: url_image
