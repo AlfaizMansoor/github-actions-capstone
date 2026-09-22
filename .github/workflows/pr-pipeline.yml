@@ -6,13 +6,10 @@ on:
 
 jobs:
     build-test:
-        runs-on: ubuntu-latest
-        steps: 
-            - name: test build
-              uses: ./.github/workflows/reusable-build-test.yml
-              with: 
-                run_tests: true
-                python_version: '3.11'
+        uses: ./.github/workflows/reusable-build-test.yml
+        with: 
+            run_tests: true
+            python_version: '3.11'
     pr-comment:
         needs: [build-test]
         runs-on: ubuntu-latest

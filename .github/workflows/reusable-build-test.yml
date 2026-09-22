@@ -32,8 +32,9 @@ jobs:
                 python-version:  ${{ inputs.python_version }}
               
             - name: install dependencies
+              working-directory: ./projects
               run: pip install --no-cache-dir -r requirements.txt
-
+              
             - name: run tests
               if: ${{inputs.run_tests == true}}
               id: runs
