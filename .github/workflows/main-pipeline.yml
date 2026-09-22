@@ -14,9 +14,6 @@ jobs:
         with:
             image_name: 'github-actions-capstone'
             tag: "latest,sha-${{github.sha}}"
-        secrets:
-            username: ${{ secrets.DOCKER_USERNAME }}
-            password: ${{ secrets.DOCKER_TOKEN }}
 
     deploy:
         needs: [docker-build]
