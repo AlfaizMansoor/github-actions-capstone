@@ -14,6 +14,7 @@ jobs:
         with:
             image_name: 'github-actions-capstone'
             tag: "latest,sha-${{github.sha}}"
+        secrets: inherit
 
     deploy:
         needs: [docker-build]
@@ -21,3 +22,4 @@ jobs:
         steps:
             - name: deploying image
               run: echo "Deploying image:${{ needs.docker-build.outputs.image_url }} to production"
+              
