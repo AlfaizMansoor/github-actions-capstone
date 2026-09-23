@@ -83,4 +83,4 @@ requirements.txt         Python dependencies
 
 ## Note
 
-This project is intended for learning and local development. It does not include authentication, authorization, production database migrations, or production-grade validation and security configuration. for practice only
+This project is intended for learning and local development. It does not include authentication, authorization, production database migrations, or production-grade validation and security configuration.
