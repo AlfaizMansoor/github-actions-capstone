@@ -47,6 +47,6 @@ jobs:
             - name: image set
               id: url_image
               run: |
-                FULL_IMAGE="${{ secrets.DOCKER_USERNAME }}/${{ inputs.image_name }}:${{ inputs.tag }}"
+                FULL_IMAGE="${{ secrets.DOCKER_USERNAME }}/github-actios-capstone:${{ inputs.tag }}"
                 echo "image_url=${FULL_IMAGE}" >> $GITHUB_OUTPUT
 
