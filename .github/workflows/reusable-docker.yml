@@ -15,6 +15,9 @@ on:
                 description: "The full image path"
                 value: ${{ jobs.build-docker.outputs.image_url }}
 
+permissions:
+  contents: read
+
 jobs:
     build-docker:
         runs-on: ubuntu-latest
