@@ -25,4 +25,5 @@ jobs:
                   severity: 'CRITICAL'
                   format: 'table'
                   image-ref: ${{ secrets.DOCKER_USERNAME }}/github-actions-capstone:latest
+                  trivyignores: '.trivyignore'
                   exit-code: '1'
