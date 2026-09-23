@@ -17,6 +17,9 @@ on:
                 description: "final result"
                 value: ${{ jobs.reusable.outputs.test_result }}
 
+permissions:
+  contents: read
+
 jobs:
     reusable: 
         runs-on: ubuntu-latest
