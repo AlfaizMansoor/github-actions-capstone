@@ -38,9 +38,11 @@ jobs:
               with:
                 context: ./projects
                 push: true
-                files: ./projects/Dockerfile
+                file: ./projects/Dockerfile
                 tags: |
-                  ${{secrets.DOCKER_USERNAME}}/github-actions-capstone:latest
+                  ${{ secrets.DOCKER_USERNAME }}/github-actions-capstone:latest
+                  ${{ secrets.DOCKER_USERNAME }}/github-actions-capstone:sha-${{github.sha}}
+
 
             - name: image set
               id: url_image
