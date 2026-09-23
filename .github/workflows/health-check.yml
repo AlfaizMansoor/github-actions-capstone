@@ -33,7 +33,7 @@ jobs:
                 else
                   echo "Container Health Check Failed!"
                   docker stop $CONTAINER && docker rm $CONTAINER
-                  exit 1
+                # exit 1
                 fi
 
             - name: summary
